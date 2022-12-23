@@ -1,0 +1,27 @@
+defaults
+    log     global
+    mode    http
+    option  httplog
+
+frontend web-servers
+    bind *:80
+    default_backend app-servers
+
+backend app-servers
+    balance roundrobin
+    server 53461-web-01 54.87.179.162:80 check
+    server 53461-web-02 54.236.26.189:80 check
+
+#--masikastephy.tech params----begining
+frontend  masikastephy.tech-https-frontend
+        bind *:80
+        bind *:443 ssl crt /etc/ssl/certs/masika.pem
+        http-request redirect scheme https code 301 unless { ssl_fc }
+        default_backend masikastephy.tech-backend
+
+
+backend masikastephy.tech-backend
+        balance roundrobin
+        server 53461-web-01 54.87.179.162:80 check
+        server 53461-web-02 54.236.26.189:80 check
+# end of parameters

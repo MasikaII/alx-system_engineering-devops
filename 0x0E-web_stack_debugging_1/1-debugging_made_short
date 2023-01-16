@@ -2,3 +2,4 @@
 # script shows an easier way to change the port
 sudo sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
 sudo service nginx restart
+rm /run/nginx.pid
